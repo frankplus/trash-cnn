@@ -3,10 +3,10 @@ from keras import backend as K
 from model import generate_model
 
 #parameters
-img_width, img_height = 128, 128 # dimensions to which the images will be resized
+img_width, img_height = 256, 256 # dimensions to which the images will be resized
 dataset_dir = 'dataset-resized'
-epochs = 10
-batch_size = 4
+epochs = 50
+batch_size = 32
 num_classes = 6 #categories of trash
 
 # this is the augmentation configuration we will use for training
