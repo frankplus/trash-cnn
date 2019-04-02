@@ -1,15 +1,15 @@
 from keras.preprocessing.image import ImageDataGenerator
 from keras import backend as K
-from model import generate_model
+from model import *
 import matplotlib.pyplot as plt
 
 #parameters
-img_width, img_height = 256, 256 # dimensions to which the images will be resized
+img_width, img_height = 224, 224  # dimensions to which the images will be resized
 trainset_dir = 'dataset-splitted/training-set'
 testset_dir = 'dataset-splitted/test-set'
-epochs = 50
+epochs = 100
 batch_size = 32
-num_classes = 6 #categories of trash
+num_classes = 6  #categories of trash
 
 # this is the augmentation configuration we will use for training
 train_datagen = ImageDataGenerator(
@@ -39,7 +39,8 @@ else:
     input_shape = (img_width, img_height, 3)
 
 
-model = generate_model(input_shape, num_classes)
+model = generate_transfer_model(input_shape, num_classes)
+
 
 def fit(n_epochs):
     model.fit_generator(
@@ -51,4 +52,7 @@ def fit(n_epochs):
 
     model.save_weights('model_save.h5')
 
-fit(epochs)
+def print_layers():
+    for layer in model.layers:
+        print(layer.name)
+        print("trainable: "+str(layer.trainable))
