@@ -10,6 +10,7 @@ testset_dir = 'dataset-splitted/test-set'
 epochs = 100
 batch_size = 32
 num_classes = 6  #categories of trash
+save_weights_file = "weights_save.h5"
 
 # this is the augmentation configuration we will use for training
 train_datagen = ImageDataGenerator(
@@ -56,3 +57,9 @@ def print_layers():
     for layer in model.layers:
         print(layer.name)
         print("trainable: "+str(layer.trainable))
+        print("input_shape: " + str(layer.input_shape))
+        print("output_shape: " + str(layer.output_shape))
+        print("_____________")
+
+def load_weights():
+    model.load_weights('weights_save.h5')

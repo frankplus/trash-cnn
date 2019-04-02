@@ -1,7 +1,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, Dropout, Activation, BatchNormalization
 from keras import backend as K
-from keras import optimizers
+from keras import optimizers, regularizers
 from keras.applications import vgg19
 
 # Generate model with the same architecture as used in the work by Mindy Yang and Gary Thung
@@ -50,7 +50,7 @@ def generate_transfer_model(input_shape, num_classes):
         layer.trainable = False
 
     # add fc layers
-    model.add(Dense(256, activation="relu")) #TODO: confront relu vs leakyrelu ; add regularization
+    model.add(Dense(256, activation="relu", kernel_regularizer=regularizers.l2(0.01))) #TODO: confront relu vs leakyrelu ; tune regularization
     model.add(Dropout(0.6))
     model.add(BatchNormalization())
     model.add(Dense(num_classes, activation="softmax"))

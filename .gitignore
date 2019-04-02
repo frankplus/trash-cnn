@@ -1,6 +1,8 @@
-venv
-dataset-resized
-dataset-splitted
+venv/
+dataset-resized/
+dataset-splitted/
+dataset-splitted-reduced/
+weights_save.h5
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

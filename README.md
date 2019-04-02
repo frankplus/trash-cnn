@@ -21,6 +21,9 @@ I have splitted the dataset into train and test set with the following directory
 - tensorflow (or tensorflow-gpu if using GPU for training)
 - keras
 
-### execute
+### Execute
 I suggest to run using the -i interpreter option to run commands on terminal 
 after execution such as `fit(epochs)` or `print_layers()`
+
+### Notes about the model 
+Read [this](TRANSFER_LEARNING_NOTES.MD)
