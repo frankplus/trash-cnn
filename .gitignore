@@ -1,5 +1,6 @@
 venv
 dataset-resized
+dataset-splitted
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

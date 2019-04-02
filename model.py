@@ -3,7 +3,6 @@ from keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, Dropout, Activati
 from keras import backend as K
 
 
-
 def generate_model(input_shape, num_classes):
     # create model
     model = Sequential()
@@ -20,10 +19,10 @@ def generate_model(input_shape, num_classes):
     model.add(Flatten())
     model.add(Dropout(0.5))
     model.add(Dense(4096))
-    model.add(Activation(lambda x: K.relu(x, alpha=1e-6)))
+    model.add(Activation(lambda x: K.relu(x, alpha=1e-3)))
     model.add(Dropout(0.5))
     model.add(Dense(4096))
-    model.add(Activation(lambda x: K.relu(x, alpha=1e-6)))
+    model.add(Activation(lambda x: K.relu(x, alpha=1e-3)))
     model.add(Dense(num_classes, activation="softmax"))
 
     # compile model using accuracy to measure model performance
