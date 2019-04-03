@@ -2,6 +2,8 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras import backend as K
 from model import *
 import matplotlib.pyplot as plt
+import numpy as np
+from sklearn.metrics import classification_report, confusion_matrix
 
 #parameters
 img_width, img_height = 224, 224  # dimensions to which the images will be resized
@@ -32,7 +34,8 @@ train_generator = train_datagen.flow_from_directory(
 test_generator = test_datagen.flow_from_directory(
     testset_dir,
     target_size=(img_width, img_height),
-    batch_size=batch_size)
+    batch_size=batch_size,
+    shuffle=False)
 
 if K.image_data_format() == 'channels_first':
     input_shape = (3, img_width, img_height)
@@ -63,3 +66,17 @@ def print_layers():
 
 def load_weights():
     model.load_weights('weights_save.h5')
+
+def classification_report():
+    # Confution Matrix and Classification Report
+    Y_pred = model.predict_generator(test_generator, len(test_generator))
+    y_pred = np.argmax(Y_pred, axis=1)
+
+    print('Confusion Matrix')
+    conf_mat = confusion_matrix(test_generator.classes, y_pred)
+    print(conf_mat)
+
+    print('Classification Report')
+    target_names = list(test_generator.class_indices.keys())
+    print(classification_report(test_generator.classes, y_pred, target_names=target_names))
+
