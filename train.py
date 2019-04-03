@@ -67,7 +67,7 @@ def print_layers():
 def load_weights():
     model.load_weights('weights_save.h5')
 
-def classification_report():
+def print_classification_report():
     # Confution Matrix and Classification Report
     Y_pred = model.predict_generator(test_generator, len(test_generator))
     y_pred = np.argmax(Y_pred, axis=1)
