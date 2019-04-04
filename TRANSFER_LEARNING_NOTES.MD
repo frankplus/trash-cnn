@@ -47,6 +47,9 @@ _____________
 - VGG-19 network last layers unfrozen
 - epsilon = 0.1
 
+![acc](plots/a_period_2.png)
+![loss](plots/a_period_2_loss.png)
+
 
 ### First long training period - 50 epochs
 - L2 regularization: 0.05
