@@ -66,3 +66,5 @@ _____________
 - learning rate = 0.0005
 - VGG-19 network last layers unfrozen
 
+![acc](plots/a_period_4.png)
+![loss](plots/a_period_4_loss.png)
