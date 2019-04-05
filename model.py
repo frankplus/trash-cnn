@@ -56,7 +56,8 @@ def generate_transfer_model(input_shape, num_classes):
 
     # add fc layers
     x = base_model.output
-    x = Dense(256, activation="relu", kernel_regularizer=regularizers.l2(0.01))(x) #TODO: confront relu vs leakyrelu ; tune regularization
+    #x = Dense(256, activation="relu")(x)
+    x = Dense(256, activation="relu", kernel_regularizer=regularizers.l2(0.01))(x)
     x = Dropout(0.6)(x)
     x = BatchNormalization()(x)
     predictions = Dense(num_classes, activation="softmax")(x)
@@ -65,7 +66,7 @@ def generate_transfer_model(input_shape, num_classes):
     model = Model(inputs=base_model.input, outputs=predictions)
 
     # compile model using accuracy to measure model performance and adam optimizer
-    optimizer = optimizers.Adam(lr=0.001) #TODO test different learning rate and epsilon
+    optimizer = optimizers.Adam(lr=0.001, epsilon=0.1)
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     return model

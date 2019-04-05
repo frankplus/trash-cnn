@@ -1,30 +1,38 @@
 from keras.preprocessing.image import ImageDataGenerator
 from keras import backend as K
-from model import *
 import matplotlib.pyplot as plt
 import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix
+from model import *
+#from google.colab import drive
 
-#parameters
+# Mount Google Drive
+#drive.mount('/gdrive')
+
+# parameters
 img_width, img_height = 224, 224  # dimensions to which the images will be resized
-trainset_dir = 'dataset-splitted/training-set'
-testset_dir = 'dataset-splitted/test-set'
-epochs = 100
+n_epochs = 50
 batch_size = 32
-num_classes = 6  #categories of trash
-save_weights_file = "weights_save.h5"
+num_classes = 6  # categories of trash
+
+#project_dir = '/gdrive/My Drive/trash-cnn/'
+project_dir = ''
+trainset_dir = project_dir + 'dataset-splitted/training-set'
+testset_dir = project_dir + 'dataset-splitted/test-set'
+load_weights_file = project_dir + 'weights_save_3.h5'
+save_weights_file = project_dir + 'weights_save_4.h5'
 
 # this is the augmentation configuration we will use for training
 train_datagen = ImageDataGenerator(
-        rescale=1./255,
-        shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=True,
-        rotation_range=40,
-        width_shift_range=0.2,
-        height_shift_range=0.2)
+    rescale=1. / 255,
+    shear_range=0.2,
+    zoom_range=0.2,
+    horizontal_flip=True,
+    rotation_range=40,
+    width_shift_range=0.2,
+    height_shift_range=0.2)
 
-test_datagen = ImageDataGenerator(rescale=1./255)
+test_datagen = ImageDataGenerator(rescale=1. / 255)
 
 train_generator = train_datagen.flow_from_directory(
     trainset_dir,
@@ -42,30 +50,52 @@ if K.image_data_format() == 'channels_first':
 else:
     input_shape = (img_width, img_height, 3)
 
-
 model = generate_transfer_model(input_shape, num_classes)
 
 
+def load_weights():
+    model.load_weights(load_weights_file)
+    print("Weights loaded")
+
+
 def fit(n_epochs):
-    model.fit_generator(
+    history = model.fit_generator(
         train_generator,
         steps_per_epoch=len(train_generator),
         epochs=n_epochs,
         validation_data=test_generator,
         validation_steps=len(test_generator))
 
-    model.save_weights('model_save.h5')
+    # list all data in history
+    print(history.history.keys())
+    # summarize history for accuracy
+    plt.plot(history.history['acc'])
+    plt.plot(history.history['val_acc'])
+    plt.title('model accuracy')
+    plt.ylabel('accuracy')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+    # summarize history for loss
+    plt.plot(history.history['loss'])
+    plt.plot(history.history['val_loss'])
+    plt.title('model loss')
+    plt.ylabel('loss')
+    plt.xlabel('epoch')
+    plt.legend(['train', 'test'], loc='upper left')
+    plt.show()
+
+    model.save_weights(save_weights_file)
+
 
 def print_layers():
     for layer in model.layers:
         print(layer.name)
-        print("trainable: "+str(layer.trainable))
+        print("trainable: " + str(layer.trainable))
         print("input_shape: " + str(layer.input_shape))
         print("output_shape: " + str(layer.output_shape))
         print("_____________")
 
-def load_weights():
-    model.load_weights('weights_save.h5')
 
 def print_classification_report():
     # Confution Matrix and Classification Report
@@ -80,3 +110,7 @@ def print_classification_report():
     target_names = list(test_generator.class_indices.keys())
     print(classification_report(test_generator.classes, y_pred, target_names=target_names))
 
+
+load_weights()
+fit(n_epochs)
+# print_classification_report()

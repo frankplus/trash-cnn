@@ -41,7 +41,7 @@ _____________
 ![acc](plots/a_period_1.png)
 ![loss](plots/a_period_1_loss.png)
 
-### Medium training period - 50 epochs
+### Second training period - 50 epochs
 - L2 weights regularization: 0.01
 - learning rate = 0.005
 - VGG-19 network last layers unfrozen
@@ -51,14 +51,17 @@ _____________
 ![loss](plots/a_period_2_loss.png)
 
 
-### First long training period - 50 epochs
+### Third training period - 50 epochs
 - L2 regularization: 0.05
 - learning rate = 0.001
 - VGG-19 network last layers unfrozen
 - epsilon = 0.1
 
 
-### Second long training period - 50 epochs
+![acc](plots/a_period_3.png)
+![loss](plots/a_period_3_loss.png)
+
+### Fourth training period - 50 epochs
 - L2 regularization: 0.1
 - learning rate = 0.0005
 - VGG-19 network last layers unfrozen
