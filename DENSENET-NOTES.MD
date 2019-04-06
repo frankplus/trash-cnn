@@ -121,3 +121,20 @@ weighted avg       0.85      0.85      0.85       384
 
 ![acc](plots/c_period_3.png)
 ![loss](plots/c_period_3_loss.png)
+
+#### Classification report
+```
+              precision    recall  f1-score   support
+
+   cardboard       0.91      0.97      0.94        61
+       glass       0.97      0.93      0.95        76
+       metal       0.87      0.94      0.90        62
+       paper       0.90      0.94      0.92        90
+     plastic       0.96      0.63      0.76        73
+       trash       0.27      0.45      0.34        22
+
+   micro avg       0.86      0.86      0.86       384
+   macro avg       0.81      0.81      0.80       384
+weighted avg       0.89      0.86      0.86       384
+```
+![confmat](plots/c_confmat.png)
