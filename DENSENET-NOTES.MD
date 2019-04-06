@@ -71,3 +71,20 @@ output_shape: (None, 6)
 
 ![acc](plots/b_period_4.png)
 ![loss](plots/b_period_4_loss.png)
+
+#### Classification report
+```
+              precision    recall  f1-score   support
+
+   cardboard       0.94      0.97      0.95        61
+       glass       0.92      0.89      0.91        76
+       metal       0.87      0.97      0.92        62
+       paper       0.82      0.93      0.87        90
+     plastic       0.91      0.66      0.76        73
+       trash       0.32      0.32      0.32        22
+
+   micro avg       0.85      0.85      0.85       384
+   macro avg       0.79      0.79      0.79       384
+weighted avg       0.85      0.85      0.85       384
+```
+![confmat](plots/b_confmat.png)
