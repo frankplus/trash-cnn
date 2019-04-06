@@ -58,3 +58,16 @@ output_shape: (None, 6)
 - SGD optimizer
 - learning rate = 0.0001
 - Nesterov momentum = 0.9
+
+![acc](plots/b_period_3.png)
+![loss](plots/b_period_3_loss.png)
+
+#### Third long training period - 50 epochs
+- L2 weights regularization: 0.05
+- DenseNet121 all trainable
+- SGD optimizer
+- learning rate = 0.0001
+- Nesterov momentum = 0.9
+
+![acc](plots/b_period_4.png)
+![loss](plots/b_period_4_loss.png)
