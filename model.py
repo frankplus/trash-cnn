@@ -2,7 +2,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, Dropout, Activation, BatchNormalization
 from keras import backend as K
 from keras import optimizers, regularizers, Model
-from keras.applications import vgg19
+from keras.applications import vgg19, densenet
 
 # Generate model with the same architecture as used in the work by Mindy Yang and Gary Thung
 def generate_trashnet_model(input_shape, num_classes):
@@ -33,11 +33,11 @@ def generate_trashnet_model(input_shape, num_classes):
     return model
 
 
-# Generate model using the VGG-19 architecture pretrained with imagenet substituting the fully connected layer
+# Generate model using a pretrained architecture substituting the fully connected layer
 def generate_transfer_model(input_shape, num_classes):
 
-    # imports the VGG19 model and discards the fc layer
-    base_model = vgg19.VGG19(
+    # imports the pretrained model and discards the fc layer
+    base_model = densenet.DenseNet121(
         include_top=False,
         weights='imagenet',
         input_tensor=None,
@@ -45,14 +45,15 @@ def generate_transfer_model(input_shape, num_classes):
         pooling='max') #using max global pooling, no flatten required
 
     # train only the top layers, i.e. freeze all convolutional layers
-    for layer in base_model.layers:
-        layer.trainable = False
+    # for layer in base_model.layers:
+    #     layer.trainable = False
 
-    # unfreeze last layers of the VGG-19 network
-    train_last_conv_layer = True
-    if train_last_conv_layer:
-        for layer in base_model.layers[-3:]:
-            layer.trainable = True
+    # unfreeze last convolutional block
+    # train_last_conv_layer = True
+    # if train_last_conv_layer:
+    #     n_layers_unfreeze = 7*16+3
+    #     for layer in base_model.layers[-n_layers_unfreeze:]:
+    #         layer.trainable = True
 
     # add fc layers
     x = base_model.output
@@ -66,7 +67,8 @@ def generate_transfer_model(input_shape, num_classes):
     model = Model(inputs=base_model.input, outputs=predictions)
 
     # compile model using accuracy to measure model performance and adam optimizer
-    optimizer = optimizers.Adam(lr=0.001, epsilon=0.1)
+    optimizer = optimizers.Adam(lr=0.001)
+    #optimizer = optimizers.SGD(lr=0.0001, momentum=0.9, nesterov=True)
     model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 
     return model

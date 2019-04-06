@@ -1,3 +1,8 @@
+## The model
+This is the first experiment, without transfer learning, trying to recreate the trashnet project.
+From the first 4 epochs I haven't seen any improvements from 20-30% accuracy. I haven't tried 
+more epochs but from reading other researches I am going to try transfer learning instead.
+
 ## Differences from trashnet model
 Here are listed some differences with our implementation and the architecture of trashnet by Mindy Yang and Gary Thung
 

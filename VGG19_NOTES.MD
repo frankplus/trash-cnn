@@ -1,4 +1,4 @@
-## Using transfer learning
+## Using transfer learning with VGG-19
 Following [this paper](http://cs230.stanford.edu/projects_spring_2018/reports/8290808.pdf) we tried to use transfer 
 learning using the VGG-19 architecture pretrained with imagenet. On a first try with few epochs it seems to perform 
 better than the model based on trashnet architecture.

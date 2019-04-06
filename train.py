@@ -110,7 +110,7 @@ def print_classification_report():
     target_names = list(test_generator.class_indices.keys())
     print(classification_report(test_generator.classes, y_pred, target_names=target_names))
 
-
-load_weights()
+#print_layers()
+#load_weights()
 fit(n_epochs)
 # print_classification_report()
