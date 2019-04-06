@@ -31,6 +31,7 @@ trainable: True
 input_shape: (None, 256)
 output_shape: (None, 6)
 ```
+## First training
 
 #### Short training period - 10 epochs
 - L2 weights regularization: 0.01
@@ -88,3 +89,35 @@ output_shape: (None, 6)
 weighted avg       0.85      0.85      0.85       384
 ```
 ![confmat](plots/b_confmat.png)
+
+## Second training
+
+#### Short training period - 20 epochs
+- L2 weights regularization: 0.01
+- DenseNet121 all trainable
+- Adam optimizer
+- learning rate = 0.0005
+- epsilon = default
+
+![acc](plots/c_period_1.png)
+![loss](plots/c_period_1_loss.png)
+
+#### First long training period - 50 epochs
+- L2 weights regularization: 0.05
+- DenseNet121 all trainable
+- SGD optimizer
+- learning rate = 0.0001
+- Nesterov momentum = 0.9
+
+![acc](plots/c_period_2.png)
+![loss](plots/c_period_2_loss.png)
+
+#### Second long training period - 50 epochs
+- L2 weights regularization: 0.1
+- DenseNet121 all trainable
+- SGD optimizer
+- learning rate = 0.0001
+- Nesterov momentum = 0.9
+
+![acc](plots/c_period_3.png)
+![loss](plots/c_period_3_loss.png)

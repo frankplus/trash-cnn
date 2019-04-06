@@ -5,6 +5,9 @@ import numpy as np
 from sklearn.metrics import classification_report, confusion_matrix
 from model import *
 #from google.colab import drive
+import tensorflow as tf
+import seaborn as sn
+import pandas as pd
 
 # Mount Google Drive
 #drive.mount('/gdrive')
@@ -19,7 +22,7 @@ num_classes = 6  # categories of trash
 project_dir = ''
 trainset_dir = project_dir + 'dataset-splitted/training-set'
 testset_dir = project_dir + 'dataset-splitted/test-set'
-load_weights_file = project_dir + 'weights_save_3.h5'
+load_weights_file = project_dir + 'weights_save_densenet121_val_acc_86.0.h5'
 save_weights_file = project_dir + 'weights_save_4.h5'
 
 # this is the augmentation configuration we will use for training
@@ -102,15 +105,32 @@ def print_classification_report():
     Y_pred = model.predict_generator(test_generator, len(test_generator))
     y_pred = np.argmax(Y_pred, axis=1)
 
-    print('Confusion Matrix')
-    conf_mat = confusion_matrix(test_generator.classes, y_pred)
-    print(conf_mat)
-
     print('Classification Report')
     target_names = list(test_generator.class_indices.keys())
     print(classification_report(test_generator.classes, y_pred, target_names=target_names))
 
+    print('Confusion Matrix')
+    conf_mat = confusion_matrix(test_generator.classes, y_pred)
+    df_cm = pd.DataFrame(conf_mat, index=target_names, columns=target_names)
+    plt.figure(figsize=(10, 7))
+    sn.heatmap(df_cm, annot=True)
+
+#save keras model and convert it into tflite model
+def save_model():
+    # Save tf.keras model in HDF5 format.
+    keras_file = "keras_model.h5"
+    model.save(keras_file)
+
+    # Convert to TensorFlow Lite model.
+    converter = tf.lite.TFLiteConverter.from_keras_model_file(keras_file)
+    tflite_model = converter.convert()
+    open("converted_model.tflite", "wb").write(tflite_model)
+
+    print("saved")
+
+
 #print_layers()
-#load_weights()
-fit(n_epochs)
-# print_classification_report()
+load_weights()
+#fit(n_epochs)
+print_classification_report()
+#save_model()
