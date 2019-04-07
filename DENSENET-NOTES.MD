@@ -138,3 +138,47 @@ weighted avg       0.85      0.85      0.85       384
 weighted avg       0.89      0.86      0.86       384
 ```
 ![confmat](plots/c_confmat.png)
+
+## Third training
+
+#### First training period - 20 epochs
+- L2 weights regularization: 0.05
+- DenseNet121 all trainable
+- Adam optimizer
+- learning rate = 0.0001
+- epsilon = default
+- fully connected layer activation: elu
+
+![acc](plots/d_period_1.png)
+![acc](plots/d_period_2.png)
+![loss](plots/d_period_1_loss.png)
+![loss](plots/d_period_2_loss.png)
+
+#### Second training period - 20 epochs
+- L2 weights regularization: 0.1
+- DenseNet121 all trainable
+- SGD optimizer
+- learning rate = 0.0001
+- Nesterov momentum = 0.9
+- fully connected layer activation: elu
+
+![acc](plots/d_period_3.png)
+![loss](plots/d_period_3_loss.png)
+
+#### Classification report
+```
+              precision    recall  f1-score   support
+
+   cardboard       0.95      1.00      0.98        61
+       glass       0.96      0.92      0.94        76
+       metal       0.89      1.00      0.94        62
+       paper       0.92      0.91      0.92        90
+     plastic       0.96      0.62      0.75        73
+       trash       0.34      0.64      0.44        22
+
+   micro avg       0.87      0.87      0.87       384
+   macro avg       0.84      0.85      0.83       384
+weighted avg       0.90      0.87      0.88       384
+```
+
+![confmat](plots/d_confmat.png)
